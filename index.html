@@ -45,22 +45,34 @@
 
   <!-- LAYAR 2: PROJECTS -->
   <section class="screen" id="projects" aria-label="Proyek">
-    <h2 class="judul">PROJECTS</h2>
-    <button class="back" data-back>ESC · Kembali</button>
+    <div class="screen-head">
+      <h2 class="judul">PROJECTS</h2>
+      <button class="back" data-back aria-label="Kembali ke menu utama">
+        <span class="esc-kunci">ESC</span><span class="esc-label">Kembali</span>
+      </button>
+    </div>
     <div id="project-grid" class="grid"></div>
   </section>
 
   <!-- LAYAR 3: SKILLS -->
   <section class="screen" id="skills" aria-label="Kemampuan">
-    <h2 class="judul">SKILLS</h2>
-    <button class="back" data-back>ESC · Kembali</button>
+    <div class="screen-head">
+      <h2 class="judul">SKILLS</h2>
+      <button class="back" data-back aria-label="Kembali ke menu utama">
+        <span class="esc-kunci">ESC</span><span class="esc-label">Kembali</span>
+      </button>
+    </div>
     <div id="skill-list"></div>
   </section>
 
   <!-- LAYAR 4: ABOUT -->
   <section class="screen" id="about" aria-label="Tentang saya">
-    <h2 class="judul">ABOUT</h2>
-    <button class="back" data-back>ESC · Kembali</button>
+    <div class="screen-head">
+      <h2 class="judul">ABOUT</h2>
+      <button class="back" data-back aria-label="Kembali ke menu utama">
+        <span class="esc-kunci">ESC</span><span class="esc-label">Kembali</span>
+      </button>
+    </div>
     <div class="paper">
       <div class="monogram" id="monogram" aria-hidden="true">R</div>
       <div id="tentang-teks"></div>
@@ -69,17 +81,51 @@
 
   <!-- LAYAR 5: CONTACT -->
   <section class="screen" id="contact" aria-label="Kontak">
-    <h2 class="judul">CONTACT</h2>
-    <button class="back" data-back>ESC · Kembali</button>
+    <div class="screen-head">
+      <h2 class="judul">CONTACT</h2>
+      <button class="back" data-back aria-label="Kembali ke menu utama">
+        <span class="esc-kunci">ESC</span><span class="esc-label">Kembali</span>
+      </button>
+    </div>
+
+    <p class="kontak-intro">
+      Terbuka untuk kolaborasi, proyek kecil, atau sekadar bertukar ide soal game dan web.
+      Isi formulir di bawah — pesanmu akan diteruskan lewat aplikasi email di perangkatmu.
+    </p>
+
     <div class="chips" id="contact-list"></div>
+
+    <form class="paper form-kontak" id="form-kontak" novalidate>
+      <h3 class="form-judul">Kirim pesan</h3>
+
+      <label class="field">
+        <span>Nama</span>
+        <input type="text" name="nama" required maxlength="80" autocomplete="name">
+      </label>
+
+      <label class="field">
+        <span>Email kamu</span>
+        <input type="email" name="email" required maxlength="120" autocomplete="email">
+      </label>
+
+      <label class="field">
+        <span>Pesan</span>
+        <textarea name="pesan" rows="5" required maxlength="2000"></textarea>
+      </label>
+
+      <div class="form-kaki">
+        <button type="submit" class="tombol-kirim">Kirim ➤</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </div>
+    </form>
   </section>
 
 </main>
 
 <footer class="hud bawah">
-  <span><b>↑↓</b> pilih</span>
-  <span><b>Enter</b> buka</span>
-  <span><b>Esc</b> kembali</span>
+  <span class="kunci-grup"><span class="kunci">↑↓</span><span class="kunci-label">Pilih</span></span>
+  <span class="kunci-grup"><span class="kunci">Enter</span><span class="kunci-label">Buka</span></span>
+  <span class="kunci-grup"><span class="kunci">Esc</span><span class="kunci-label">Kembali</span></span>
   <span class="dim" id="status">HTML · CSS · JS murni</span>
 </footer>
 
@@ -87,7 +133,17 @@
 <div id="wipe" aria-hidden="true"><i></i><i></i><i></i></div>
 
 <!-- Suara menu: disintesis browser, tanpa file audio -->
-<button id="audio-toggle" aria-pressed="false" aria-label="Nyalakan suara menu">✕</button>
+<button id="audio-toggle" aria-pressed="false" aria-label="Nyalakan suara menu">
+  <svg class="ikon-bunyi" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M4 9v6h4l5 4V5L8 9H4z"/>
+    <path d="M15.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+  <svg class="ikon-bisu" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M4 9v6h4l5 4V5L8 9H4z"/>
+    <path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+</button>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>

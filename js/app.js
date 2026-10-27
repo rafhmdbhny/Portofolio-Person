@@ -62,20 +62,47 @@ function pasangRansom() {
 /* ============================================================
    2. RENDER — data.js jadi elemen di halaman
    ============================================================ */
+/* teks tombol menyesuaikan jenis tautannya */
+const CTA = {
+  repo: "Lihat di GitHub",
+  game: "Mainkan sekarang",
+  scratch: "Coba di Scratch",
+};
+
+function jenisProyek(link) {
+  if (!link) return "kosong";
+  if (link.includes("github.com")) return "repo";
+  if (link.includes("itch.io")) return "game";
+  if (link.includes("scratch.mit.edu")) return "scratch";
+  return "repo";
+}
+
 function renderProyek() {
   const grid = $("#project-grid");
   grid.textContent = "";
 
   DATA.proyek.forEach((p) => {
+    const jenis = jenisProyek(p.link);
+
+    const tombol = p.link
+      ? `<a class="cta" href="${p.link}" target="_blank" rel="noopener">${CTA[jenis]} ↗</a>`
+      : `<span class="cta mati">Segera</span>`;
+
     const kartu = document.createElement("article");
     kartu.className = "card";
+    kartu.dataset.jenis = jenis;
 
     kartu.innerHTML = `
-      <span class="tag">${p.tag}</span>
+      <div class="card-atas">
+        <span class="tahun">${p.tahun}</span>
+        <span class="tag">${p.tag}</span>
+      </div>
       <h3>${p.judul}</h3>
       <p>${p.deskripsi}</p>
-      <div class="meta">${p.tahun}${p.stack ? " · " + p.stack : ""}</div>
-      ${p.link ? `<a class="link" href="${p.link}" target="_blank" rel="noopener">Buka ↗</a>` : ""}
+      <div class="card-kaki">
+        <span class="stack">${p.stack}</span>
+        ${tombol}
+      </div>
     `;
 
     grid.appendChild(kartu);
@@ -125,7 +152,12 @@ function renderKontak() {
   const wrap = $("#contact-list");
   wrap.textContent = "";
 
-  DATA.kontak.forEach(([label, url]) => {
+  // kalau DATA.email diisi, tombol Email muncul otomatis di paling kiri
+  const daftar = DATA.email
+    ? [["Email", "mailto:" + DATA.email], ...DATA.kontak]
+    : DATA.kontak;
+
+  daftar.forEach(([label, url]) => {
     if (!url) return;
 
     const a = document.createElement("a");
@@ -139,6 +171,57 @@ function renderKontak() {
     }
 
     wrap.appendChild(a);
+  });
+
+  // tombol CV hanya muncul kalau DATA.cv diisi
+  if (DATA.cv) {
+    const cv = document.createElement("a");
+    cv.className = "chip";
+    cv.href = DATA.cv;
+    cv.textContent = "CV ⬇";
+    cv.setAttribute("download", "");
+    wrap.appendChild(cv);
+  }
+}
+
+/* ============================================================
+   2b. FORMULIR KONTAK
+   Tanpa server: pesan disusun jadi tautan mailto, lalu
+   aplikasi email di perangkat pengunjung yang mengirim.
+   ============================================================ */
+function siapkanForm() {
+  const form = $("#form-kontak");
+  if (!form) return;
+
+  const status = $("#form-status");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const isi = new FormData(form);
+    const nama = (isi.get("nama") || "").trim();
+    const email = (isi.get("email") || "").trim();
+    const pesan = (isi.get("pesan") || "").trim();
+
+    if (!nama || !email || !pesan) {
+      status.textContent = "Isi nama, email, dan pesan dulu ya.";
+      return;
+    }
+
+    if (!DATA.email) {
+      status.textContent = "Email tujuan belum diisi di js/data.js.";
+      return;
+    }
+
+    const judul = `Pesan dari ${nama} — portofolio`;
+    const badan = `${pesan}\n\n— ${nama}\n${email}`;
+    const tujuan = `mailto:${DATA.email}` +
+      `?subject=${encodeURIComponent(judul)}` +
+      `&body=${encodeURIComponent(badan)}`;
+
+    status.textContent = "Membuka aplikasi email…";
+    window.location.href = tujuan;
+    form.reset();
   });
 }
 
@@ -276,7 +359,7 @@ $("#audio-toggle").addEventListener("click", (e) => {
 
   const tombol = e.currentTarget;
   tombol.setAttribute("aria-pressed", String(audioNyala));
-  tombol.textContent = audioNyala ? "♪" : "✕";
+  tombol.setAttribute("aria-label", audioNyala ? "Matikan suara menu" : "Nyalakan suara menu");
   tombol.classList.toggle("nyala", audioNyala);
 
   if (audioNyala) bunyi();
@@ -288,7 +371,7 @@ if (document.body.dataset.audio === "on") {
 
   const tombolAudio = $("#audio-toggle");
   tombolAudio.setAttribute("aria-pressed", "true");
-  tombolAudio.textContent = "♪";
+  tombolAudio.setAttribute("aria-label", "Matikan suara menu");
   tombolAudio.classList.add("nyala");
 }
 
@@ -307,6 +390,7 @@ function mulai() {
   renderSkills();
   renderTentang();
   renderKontak();
+  siapkanForm();
 
   tandaiMenu(0);
   document.title = DATA.nama + " · Portfolio";

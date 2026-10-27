@@ -26,34 +26,43 @@ const DATA = {
 
   /* ---------- 3. PROYEK ----------
      Tambah proyek = tambah satu { ... } baru. Jangan lupa koma di akhir.
-     link boleh "" kalau belum ada.                            */
+     link boleh "" kalau belum ada (tombol "Buka" otomatis disembunyikan). */
   proyek: [
     {
       judul: "Araya & Ciputra: Wrong School",
-      tag: "Game",
+      tag: "Game · Horor",
       tahun: "2026",
-      stack: "Itch.io",
-      deskripsi: "Game naratif yang sudah terbit di itch.io. Ganti kalimat ini dengan " +
-                 "cerita singkat proyeknya: ide awalnya, peranmu, dan apa yang paling susah.",
-      link: "https://rafhmdbhny.itch.io",
+      stack: "itch.io",
+      deskripsi: "Game horor naratif yang bisa dimainkan langsung di browser. " +
+                 "Fokusnya suasana, cerita, dan keputusan pemain.",
+      link: "https://rafhmdbhny.itch.io/araya-ciputra-wrong-school",
     },
     {
-      judul: "Araya & Ciputra 3 Day",
-      tag: "Draft",
+      judul: "Saku Pintar",
+      tag: "Web",
       tahun: "2026",
-      stack: "Itch.io",
-      deskripsi: "Versi pendek dari proyek yang sama, masih dalam pengerjaan. " +
-                 "Cocok untuk menunjukkan proses, bukan hanya hasil akhir.",
-      link: "",
+      stack: "HTML · CSS · JS",
+      deskripsi: "Aplikasi web yang kubangun sendiri, dari rancangan tampilan sampai " +
+                 "halaman jadi. Kode lengkapnya terbuka di GitHub.",
+      link: "https://github.com/rafhmdbhny/sakupintar-care",
     },
     {
-      judul: "Slot Kosong",
-      tag: "Segera",
+      judul: "Kalkulator Scratch",
+      tag: "Scratch",
       tahun: "2026",
-      stack: "",
-      deskripsi: "Tempat proyek berikutnya. Saat kamu punya karya baru, ubah objek ini " +
-                 "atau tambahkan objek baru di bawahnya.",
-      link: "",
+      stack: "Scratch",
+      deskripsi: "Kalkulator yang dibuat dengan blok Scratch — latihan logika dasar: " +
+                 "variabel, operator, dan alur percabangan.",
+      link: "https://scratch.mit.edu/projects/1391090538", // <- tempel link proyek Scratch-mu di sini
+    },
+    {
+      judul: "Raffi Cocok Tanam",
+      tag: "Scratch",
+      tahun: "2026",
+      stack: "Scratch",
+      deskripsi: "Proyek Scratch bertema bercocok tanam: menanam, merawat, lalu memanen. " +
+                 "Latihan membuat game loop sederhana.",
+      link: "", // <- tempel link proyek Scratch-mu di sini
     },
   ],
 
@@ -63,34 +72,42 @@ const DATA = {
     {
       grup: "Web & Kode",
       items: [
-        ["HTML & CSS", 60],
-        ["JavaScript", 35],
-        ["Git & GitHub", 25],
+        ["Github", 40],
+        ["C#", 35],
+        ["HTML,CSS,JS,PY", 25],
       ],
     },
     {
-      grup: "Game & Seni",
+      grup: "Game & Desain",
       items: [
-        ["Desain cerita", 65],
-        ["Pixel art", 40],
-        ["Godot / engine", 30],
+        ["Game Developer", 45],
+        ["UI/UX Design", 30],
+        ["C#", 30],
       ],
     },
     {
       grup: "Sedang Dipelajari",
       items: [
-        ["React", 15],
+        ["English", 15],
         ["TypeScript", 10],
       ],
     },
   ],
 
   /* ---------- 5. KONTAK ----------
-     Hapus barisnya kalau belum punya. Format: ["Label", "url"]  */
+     Alamat email TUJUAN formulir kontak.
+     Ganti dengan email aslimu. Kalau masih kosong, formulir menolak mengirim. */
+  email: "",
+
+  /* Link CV (PDF). Kosongkan kalau belum ada. */
+  cv: "",
+
+  /* Tombol-tombol kontak. Format: ["Label", "url"].
+     Urutan di sini = urutan tombol di layar.
+     Tombol Email muncul otomatis kalau `email` di atas diisi. */
   kontak: [
+    ["GitHub", "https://github.com/rafhmdbhny"],
+    ["Instagram", "https://instagram.com/raffi.xwyz"],
     ["itch.io", "https://rafhmdbhny.itch.io"],
-    // ["Email", "mailto:kamu@email.com"],
-    // ["GitHub", "https://github.com/username"],
-    // ["Instagram", "https://instagram.com/username"],
   ],
 };
