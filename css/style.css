@@ -685,9 +685,9 @@ main {
 }
 
 /* ============================================================
-   LATAR VIDEO — hanya tampil di menu utama
-   Dipicu oleh body[data-screen="home"], yang diisi app.js
-   setiap kali layar berganti.
+   LATAR VIDEO — satu video per layar
+   Tiap .bg-video punya data-untuk berisi nama layar.
+   app.js mengisi body[data-screen] setiap kali layar berganti.
    ============================================================ */
 .bg-video {
   position: fixed;
@@ -699,7 +699,8 @@ main {
   transition: opacity .7s ease;
 }
 
-body[data-screen="home"] .bg-video { opacity: 1 }
+body[data-screen="home"] .bg-video[data-untuk="home"] { opacity: 1 }
+body[data-screen="projects"] .bg-video[data-untuk="projects"] { opacity: 1 }
 
 .bg-video video {
   width: 100%;

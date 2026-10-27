@@ -148,6 +148,46 @@ function renderTentang() {
   $("#monogram").textContent = DATA.nama.charAt(0).toUpperCase();
 }
 
+/* sertifikat: hanya dirender kalau ada isinya */
+function renderSertifikat() {
+  const blok = $("#sertifikat-blok");
+  const grid = $("#sertifikat-grid");
+  if (!blok || !grid) return;
+
+  const daftar = DATA.sertifikat || [];
+
+  if (!daftar.length) {
+    blok.hidden = true;
+    return;
+  }
+
+  blok.hidden = false;
+  grid.textContent = "";
+
+  daftar.forEach((s) => {
+    const kartu = document.createElement("article");
+    kartu.className = "sertif";
+
+    const gambar = s.gambar
+      ? `<img class="sertif-gambar" src="${s.gambar}" alt="Sertifikat ${s.judul}" loading="lazy">`
+      : `<div class="sertif-gambar kosong">FOTO</div>`;
+
+    const keterangan = [s.penyelenggara, s.tahun].filter(Boolean).join(" · ");
+
+    kartu.innerHTML = `
+      ${gambar}
+      <div class="sertif-isi">
+        <span class="sertif-badge">${s.peringkat || "Peserta"}</span>
+        <h4>${s.judul}</h4>
+        <p>${keterangan}</p>
+        ${s.link ? `<a class="sertif-link" href="${s.link}" target="_blank" rel="noopener">Lihat sertifikat ↗</a>` : ""}
+      </div>
+    `;
+
+    grid.appendChild(kartu);
+  });
+}
+
 function renderKontak() {
   const wrap = $("#contact-list");
   wrap.textContent = "";
@@ -246,12 +286,14 @@ function gantiLayar(ke) {
   layarAktif = ke;
   document.body.dataset.screen = ke;
 
-  // video latar hanya berjalan di menu utama — hemat baterai & CPU
-  const videoLatar = document.querySelector(".bg-video video");
-  if (videoLatar) {
-    if (ke === "home") videoLatar.play().catch(() => {});
-    else videoLatar.pause();
-  }
+  // jalankan hanya video milik layar aktif, jeda sisanya (hemat CPU & baterai)
+  $$(".bg-video").forEach((kotak) => {
+    const video = kotak.querySelector("video");
+    if (!video) return;
+
+    if (kotak.dataset.untuk === ke) video.play().catch(() => {});
+    else video.pause();
+  });
 
   if (ke === "skills") animasiBar();
   window.scrollTo(0, 0);
@@ -324,14 +366,29 @@ document.addEventListener("keydown", (e) => {
 });
 
 /* ============================================================
-   4. SUARA — disintesis Web Audio, tanpa file .mp3
+   4. SUARA — efek klik (klik.mp3) + musik latar (bgm.mp3)
    ============================================================ */
-let audioNyala = false;
-let ac = null;
+const sfxKlik = $("#sfx-klik");
+const bgm = $("#bgm");
+const VOLUME_BGM = 0.22;
 
+let audioNyala = document.body.dataset.audio === "on";
+let ac = null;   /* cadangan: hanya dipakai kalau file klik gagal */
+
+/* efek klik: pakai file, kalau gagal jatuh ke bunyi sintetis */
 function bunyi() {
   if (!audioNyala) return;
 
+  if (sfxKlik) {
+    sfxKlik.currentTime = 0;
+    sfxKlik.play().catch(bunyiSintetis);
+    return;
+  }
+
+  bunyiSintetis();
+}
+
+function bunyiSintetis() {
   try {
     ac = ac || new (window.AudioContext || window.webkitAudioContext)();
 
@@ -354,24 +411,50 @@ function bunyi() {
   }
 }
 
+/* musik latar */
+function putarBgm() {
+  if (!bgm || !audioNyala) return;
+  bgm.volume = VOLUME_BGM;
+  bgm.play().catch(() => {});
+}
+
+function hentikanBgm() {
+  if (bgm) bgm.pause();
+}
+
+/* browser hanya mengizinkan audio setelah ada interaksi pengguna */
+["pointerdown", "keydown"].forEach((jenis) => {
+  document.addEventListener(jenis, putarBgm, { once: true });
+});
+
+/* jangan memutar musik saat tab tidak aktif — hemat baterai */
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) hentikanBgm();
+  else putarBgm();
+});
+
+/* tombol speaker: satu saklar untuk klik + musik */
 $("#audio-toggle").addEventListener("click", (e) => {
   audioNyala = !audioNyala;
 
   const tombol = e.currentTarget;
   tombol.setAttribute("aria-pressed", String(audioNyala));
-  tombol.setAttribute("aria-label", audioNyala ? "Matikan suara menu" : "Nyalakan suara menu");
+  tombol.setAttribute("aria-label", audioNyala ? "Matikan suara" : "Nyalakan suara");
   tombol.classList.toggle("nyala", audioNyala);
 
-  if (audioNyala) bunyi();
+  if (audioNyala) {
+    putarBgm();
+    bunyi();
+  } else {
+    hentikanBgm();
+  }
 });
 
-/* suara bisa dinyalakan sejak awal lewat <body data-audio="on"> */
-if (document.body.dataset.audio === "on") {
-  audioNyala = true;
-
+/* keadaan awal dari <body data-audio="on"> */
+if (audioNyala) {
   const tombolAudio = $("#audio-toggle");
   tombolAudio.setAttribute("aria-pressed", "true");
-  tombolAudio.setAttribute("aria-label", "Matikan suara menu");
+  tombolAudio.setAttribute("aria-label", "Matikan suara");
   tombolAudio.classList.add("nyala");
 }
 
@@ -389,6 +472,7 @@ function mulai() {
   renderProyek();
   renderSkills();
   renderTentang();
+  renderSertifikat();
   renderKontak();
   siapkanForm();
 

@@ -53,7 +53,7 @@ const DATA = {
       stack: "Scratch",
       deskripsi: "Kalkulator yang dibuat dengan blok Scratch — latihan logika dasar: " +
                  "variabel, operator, dan alur percabangan.",
-      link: "https://scratch.mit.edu/projects/1391090538", // <- tempel link proyek Scratch-mu di sini
+      link: "https://scratch.mit.edu/projects/1391090538/",
     },
     {
       judul: "Raffi Cocok Tanam",
@@ -62,7 +62,7 @@ const DATA = {
       stack: "Scratch",
       deskripsi: "Proyek Scratch bertema bercocok tanam: menanam, merawat, lalu memanen. " +
                  "Latihan membuat game loop sederhana.",
-      link: "", // <- tempel link proyek Scratch-mu di sini
+      link: "https://scratch.mit.edu/projects/1393898172/",
     },
   ],
 
@@ -109,5 +109,21 @@ const DATA = {
     ["GitHub", "https://github.com/rafhmdbhny"],
     ["Instagram", "https://instagram.com/raffi.xwyz"],
     ["itch.io", "https://rafhmdbhny.itch.io"],
+  ],
+
+  /* ---------- 6. SERTIFIKAT ----------
+     Satu objek = satu kartu. Kalau array ini kosong, bloknya
+     otomatis disembunyikan (tidak ada kotak kosong).
+     Foto: taruh di assets/sertifikat/ lalu tulis path-nya di `gambar`.
+     `peringkat` boleh "Peserta", "Finalis", "Juara 1", dst. */
+  sertifikat: [
+    // {
+    //   judul: "Peserta Lomba ...",
+    //   penyelenggara: "...",
+    //   tahun: "2026",
+    //   peringkat: "Peserta",
+    //   gambar: "assets/sertifikat/lomba.jpg",
+    //   link: "",
+    // },
   ],
 };

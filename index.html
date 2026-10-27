@@ -14,10 +14,17 @@
 </head>
 <body data-screen="home" data-audio="on">
 
-<!-- Latar video: hanya tampil di menu utama (diatur lewat body[data-screen]) -->
-<div class="bg-video" aria-hidden="true">
+<!-- Latar video per layar: yang tampil hanya yang cocok dengan body[data-screen] -->
+<div class="bg-video" data-untuk="home" aria-hidden="true">
   <video autoplay muted loop playsinline preload="metadata">
     <source src="assets/bg.mp4" type="video/mp4">
+  </video>
+  <div class="bg-veil"></div>
+</div>
+
+<div class="bg-video" data-untuk="projects" aria-hidden="true">
+  <video muted loop playsinline preload="none">
+    <source src="assets/bg-projects.mp4" type="video/mp4">
   </video>
   <div class="bg-veil"></div>
 </div>
@@ -77,6 +84,12 @@
       <div class="monogram" id="monogram" aria-hidden="true">R</div>
       <div id="tentang-teks"></div>
     </div>
+
+    <!-- Blok sertifikat: otomatis muncul kalau DATA.sertifikat ada isinya -->
+    <div id="sertifikat-blok" class="sertifikat" hidden>
+      <h3 class="sertifikat-judul">Sertifikat</h3>
+      <div id="sertifikat-grid" class="sertifikat-grid"></div>
+    </div>
   </section>
 
   <!-- LAYAR 5: CONTACT -->
@@ -132,8 +145,8 @@
 <!-- Panel sapuan layar (diisi CSS, bukan gambar) -->
 <div id="wipe" aria-hidden="true"><i></i><i></i><i></i></div>
 
-<!-- Suara menu: disintesis browser, tanpa file audio -->
-<button id="audio-toggle" aria-pressed="false" aria-label="Nyalakan suara menu">
+<!-- Tombol speaker: satu saklar untuk efek klik + musik latar -->
+<button id="audio-toggle" aria-pressed="false" aria-label="Nyalakan suara">
   <svg class="ikon-bunyi" viewBox="0 0 24 24" aria-hidden="true">
     <path d="M4 9v6h4l5 4V5L8 9H4z"/>
     <path d="M15.5 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -144,6 +157,10 @@
     <path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
   </svg>
 </button>
+
+<!-- Audio: efek klik + musik latar (dimuat hanya saat diputar) -->
+<audio id="sfx-klik" src="assets/klik.mp3" preload="auto"></audio>
+<audio id="bgm" src="assets/bgm.mp3" loop preload="none"></audio>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
