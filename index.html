@@ -45,6 +45,7 @@
     <nav class="menu" aria-label="Bagian portofolio">
       <button data-target="projects"><span>PROJECTS</span><span class="mark" aria-hidden="true">◀</span></button>
       <button data-target="skills"><span>SKILLS</span><span class="mark" aria-hidden="true">◀</span></button>
+      <button data-target="certificates"><span>CERTIFICATES</span><span class="mark" aria-hidden="true">◀</span></button>
       <button data-target="about"><span>ABOUT</span><span class="mark" aria-hidden="true">◀</span></button>
       <button data-target="contact"><span>CONTACT</span><span class="mark" aria-hidden="true">◀</span></button>
     </nav>
@@ -72,7 +73,20 @@
     <div id="skill-list"></div>
   </section>
 
-  <!-- LAYAR 4: ABOUT -->
+  <!-- LAYAR 4: CERTIFICATES -->
+  <section class="screen" id="certificates" aria-label="Sertifikat">
+    <div class="screen-head">
+      <h2 class="judul">CERTIFICATES</h2>
+      <button class="back" data-back aria-label="Kembali ke menu utama">
+        <span class="esc-kunci">ESC</span><span class="esc-label">Kembali</span>
+      </button>
+    </div>
+    <div id="sertifikat-blok" class="sertifikat">
+      <div id="sertifikat-grid" class="sertifikat-grid"></div>
+    </div>
+  </section>
+
+  <!-- LAYAR 5: ABOUT -->
   <section class="screen" id="about" aria-label="Tentang saya">
     <div class="screen-head">
       <h2 class="judul">ABOUT</h2>
@@ -84,15 +98,9 @@
       <div class="monogram" id="monogram" aria-hidden="true">R</div>
       <div id="tentang-teks"></div>
     </div>
-
-    <!-- Blok sertifikat: otomatis muncul kalau DATA.sertifikat ada isinya -->
-    <div id="sertifikat-blok" class="sertifikat" hidden>
-      <h3 class="sertifikat-judul">Sertifikat</h3>
-      <div id="sertifikat-grid" class="sertifikat-grid"></div>
-    </div>
   </section>
 
-  <!-- LAYAR 5: CONTACT -->
+  <!-- LAYAR 6: CONTACT -->
   <section class="screen" id="contact" aria-label="Kontak">
     <div class="screen-head">
       <h2 class="judul">CONTACT</h2>

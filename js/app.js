@@ -148,39 +148,49 @@ function renderTentang() {
   $("#monogram").textContent = DATA.nama.charAt(0).toUpperCase();
 }
 
-/* sertifikat: hanya dirender kalau ada isinya */
+/* sertifikat: dirender di layar CERTIFICATES */
 function renderSertifikat() {
-  const blok = $("#sertifikat-blok");
   const grid = $("#sertifikat-grid");
-  if (!blok || !grid) return;
+  if (!grid) return;
 
   const daftar = DATA.sertifikat || [];
 
   if (!daftar.length) {
-    blok.hidden = true;
+    grid.innerHTML = `<p class="sertif-kosong">Belum ada sertifikat yang ditambahkan.</p>`;
     return;
   }
 
-  blok.hidden = false;
   grid.textContent = "";
 
   daftar.forEach((s) => {
     const kartu = document.createElement("article");
-    kartu.className = "sertif";
+    kartu.className = "card sertif";
 
-    const gambar = s.gambar
-      ? `<img class="sertif-gambar" src="${s.gambar}" alt="Sertifikat ${s.judul}" loading="lazy">`
-      : `<div class="sertif-gambar kosong">FOTO</div>`;
+    const targetLink = s.link || s.gambar || "";
+
+    const gambarHtml = s.gambar
+      ? `<a class="sertif-gambar-wrap" href="${targetLink || '#'}" ${targetLink ? 'target="_blank" rel="noopener"' : ''} title="Klik untuk memperbesar">
+          <img class="sertif-gambar" src="${s.gambar}" alt="Sertifikat ${s.judul}" loading="lazy">
+          <span class="sertif-zoom">🔍 Perbesar</span>
+         </a>`
+      : `<div class="sertif-gambar kosong">SERTIFIKAT</div>`;
 
     const keterangan = [s.penyelenggara, s.tahun].filter(Boolean).join(" · ");
 
     kartu.innerHTML = `
-      ${gambar}
+      <div class="card-atas sertif-atas">
+        <span class="tahun">${s.tahun || ""}</span>
+        <span class="tag">${s.peringkat || "Peserta"}</span>
+      </div>
+      ${gambarHtml}
       <div class="sertif-isi">
-        <span class="sertif-badge">${s.peringkat || "Peserta"}</span>
-        <h4>${s.judul}</h4>
-        <p>${keterangan}</p>
-        ${s.link ? `<a class="sertif-link" href="${s.link}" target="_blank" rel="noopener">Lihat sertifikat ↗</a>` : ""}
+        <h3>${s.judul}</h3>
+        <p class="sertif-ket">${keterangan}</p>
+        ${s.nomor ? `<p class="sertif-nomor">No: ${s.nomor}</p>` : ""}
+      </div>
+      <div class="card-kaki">
+        <span class="stack">${s.penyelenggara || "Sertifikat"}</span>
+        ${targetLink ? `<a class="cta" href="${targetLink}" target="_blank" rel="noopener">Buka Dokumen ↗</a>` : `<span class="cta mati">Arsip</span>`}
       </div>
     `;
 

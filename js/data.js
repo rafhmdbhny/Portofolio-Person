@@ -112,17 +112,27 @@ const DATA = {
   ],
 
   /* ---------- 6. SERTIFIKAT ----------
-     Satu objek = satu kartu. Kalau array ini kosong, bloknya
-     otomatis disembunyikan (tidak ada kotak kosong).
+     Satu objek = satu kartu. Kalau array ini kosong, muncul pesan kosong.
      Foto: taruh di assets/sertifikat/ lalu tulis path-nya di `gambar`.
      `peringkat` boleh "Peserta", "Finalis", "Juara 1", dst. */
   sertifikat: [
+    {
+      judul: "Bali AI Tech Festival 2026 (Tingkat Nasional)",
+      penyelenggara: "Bali IT Academy & IndoApps Solusindo",
+      tahun: "2026",
+      peringkat: "Peserta",
+      nomor: "039/SERT/BAIFES/IX/2026",
+      gambar: "assets/sertifikat/bali-ai-tech-festival-2026.jpg",
+      link: "assets/sertifikat/bali-ai-tech-festival-2026.jpg",
+    },
+    // Template untuk sertifikat tanggal 3 nanti (tinggal hapus // dan isi datanya):
     // {
-    //   judul: "Peserta Lomba ...",
-    //   penyelenggara: "...",
+    //   judul: "Nama Sertifikat Baru",
+    //   penyelenggara: "Penyelenggara",
     //   tahun: "2026",
     //   peringkat: "Peserta",
-    //   gambar: "assets/sertifikat/lomba.jpg",
+    //   nomor: "",
+    //   gambar: "assets/sertifikat/nama-foto.jpg",
     //   link: "",
     // },
   ],
