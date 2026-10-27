@@ -14,13 +14,13 @@ const DATA = {
 
   /* ---------- 2. TENTANG (satu paragraf = satu string) ---------- */
   tentang: [
-    "Aku pemula yang serius belajar membuat game dan website. Mulai dari HTML dan CSS, " +
-    "sekarang aku sedang mendalami JavaScript dan mencoba berbagai alat pengembangan game.",
+    "Aku pemula yang sedang  belajar membuat game dan website. Mulai dari HTML dan CSS, " +
+    "sekarang aku sedang mendalami C# dan mencoba berbagai alat pengembangan game.",
 
     "Aku lebih suka belajar dengan membuat sesuatu yang benar-benar dipakai orang, " +
     "walaupun kecil. Setiap proyek kuanggap latihan: selesai, dipakai, lalu diperbaiki.",
 
-    "Kalau kamu ingin mengobrol soal game, desain, atau sekadar bertukar ide, " +
+    "Kalau kamu ingin mengobrol soal game, atau sekadar bertukar ide, " +
     "hubungi aku lewat halaman kontak.",
   ],
 

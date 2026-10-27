@@ -335,7 +335,7 @@ function animasiBar() {
   });
 }
 
-/* klik menu */
+/* klik & hover menu */
 menu.forEach((b, i) => {
   b.addEventListener("click", () => {
     tandaiMenu(i);
@@ -343,12 +343,23 @@ menu.forEach((b, i) => {
     pindah(b.dataset.target);
   });
 
-  b.addEventListener("mouseenter", () => tandaiMenu(i));
+  b.addEventListener("mouseenter", () => {
+    if (indexMenu !== i) {
+      tandaiMenu(i);
+      bunyi();
+    }
+  });
 });
 
 /* tombol kembali + logo */
-$$("[data-back]").forEach((b) => b.addEventListener("click", () => pindah("home")));
-$("#nav-home").addEventListener("click", () => pindah("home"));
+$("[data-back]").forEach((b) => b.addEventListener("click", () => {
+  bunyi();
+  pindah("home");
+}));
+$("#nav-home").addEventListener("click", () => {
+  bunyi();
+  pindah("home");
+});
 
 /* keyboard: ↑ ↓ Enter Esc */
 document.addEventListener("keydown", (e) => {
@@ -390,9 +401,19 @@ function bunyi() {
   if (!audioNyala) return;
 
   if (sfxKlik) {
-    sfxKlik.currentTime = 0;
-    sfxKlik.play().catch(bunyiSintetis);
-    return;
+    try {
+      const sound = sfxKlik.cloneNode();
+      sound.volume = 0.55;
+      sound.play().catch(() => {
+        sfxKlik.currentTime = 0;
+        sfxKlik.play().catch(bunyiSintetis);
+      });
+      return;
+    } catch {
+      sfxKlik.currentTime = 0;
+      sfxKlik.play().catch(bunyiSintetis);
+      return;
+    }
   }
 
   bunyiSintetis();
