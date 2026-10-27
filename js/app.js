@@ -352,7 +352,7 @@ menu.forEach((b, i) => {
 });
 
 /* tombol kembali + logo */
-$("[data-back]").forEach((b) => b.addEventListener("click", () => {
+$$("[data-back]").forEach((b) => b.addEventListener("click", () => {
   bunyi();
   pindah("home");
 }));
@@ -402,16 +402,16 @@ function bunyi() {
 
   if (sfxKlik) {
     try {
-      const sound = sfxKlik.cloneNode();
-      sound.volume = 0.55;
-      sound.play().catch(() => {
-        sfxKlik.currentTime = 0;
-        sfxKlik.play().catch(bunyiSintetis);
-      });
-      return;
-    } catch {
       sfxKlik.currentTime = 0;
-      sfxKlik.play().catch(bunyiSintetis);
+      const p = sfxKlik.play();
+      if (p && p.catch) {
+        p.catch(() => {
+          bunyiSintetis();
+        });
+      }
+      return;
+    } catch (e) {
+      bunyiSintetis();
       return;
     }
   }
