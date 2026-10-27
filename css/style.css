@@ -1,0 +1,530 @@
+/* ============================================================
+   STYLE — semua tampilan.
+   Mau ganti warna seluruh situs? Ubah 5 variabel di :root.
+   ============================================================ */
+
+:root {
+  --hitam:  #0b0b0f;
+  --hitam2: #121216;
+  --putih:  #f4f2ec;
+  --merah:  #e60012;
+  --abu:    #8b8b95;
+  --garis:  #26262b;
+
+  --display: "Archivo Black", Impact, "Arial Black", sans-serif;
+  --teks:    "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box }
+
+html { scroll-behavior: smooth }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px 24px;
+  color: var(--putih);
+  font-family: var(--teks);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  cursor: crosshair;
+  -webkit-tap-highlight-color: transparent;
+
+  /* Tiga lapisan, tanpa satu pun file gambar:
+     1. vignette  2. titik halftone  3. garis diagonal  4. warna dasar */
+  background:
+    radial-gradient(ellipse at 50% 45%, transparent 30%, #000 100%),
+    radial-gradient(rgba(255, 255, 255, .09) 1.2px, transparent 1.3px) 0 0 / 12px 12px,
+    repeating-linear-gradient(115deg, transparent 0 60px, rgba(230, 0, 18, .12) 60px 92px),
+    var(--hitam);
+}
+
+/* Bintang besar: dibuat dari polygon, bukan PNG */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 34vmax;
+  height: 34vmax;
+  z-index: 0;
+  background: var(--merah);
+  opacity: .10;
+  pointer-events: none;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 94%,
+                     50% 72%, 21% 94%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+body::before { left: -9vmax; top: -7vmax; transform: rotate(-10deg) }
+body::after  { right: -8vmax; bottom: -8vmax; transform: rotate(14deg); opacity: .14 }
+
+/* Isi harus di atas bintang, bintang di atas video */
+body::before, body::after { z-index: 1 }
+.hud, main, footer { position: relative; z-index: 2 }
+
+/* ============================================================
+   HUD (bar atas & bawah)
+   ============================================================ */
+.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--garis);
+  color: var(--abu);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.hud.bawah {
+  border-bottom: 0;
+  border-top: 1px solid var(--garis);
+  padding: 12px 0 0;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hud b { color: var(--putih); font-weight: 600 }
+
+.hud-tag {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--abu);
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color .2s;
+}
+
+.hud-tag:hover { color: var(--putih) }
+.dim { opacity: .65 }
+
+/* penanda kecil merah di kiri atas */
+#nav-home::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 9px;
+  background: var(--merah);
+  vertical-align: 1px;
+}
+
+/* label kanan tidak boleh menabrak tepi layar */
+#hud-peran {
+  max-width: 52%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   PANGGUNG & LAYAR
+   ============================================================ */
+main {
+  flex: 1;
+  display: grid;
+  align-items: center;
+  padding: 40px 0;
+}
+
+/* kunci navigasi: semua tersembunyi, satu yang .active tampil */
+.screen { display: none; width: 100%; max-width: 900px; margin: 0 auto }
+.screen.active { display: block; animation: masuk .35s ease both }
+
+@keyframes masuk {
+  from { opacity: 0; transform: translateY(12px) }
+  to   { opacity: 1; transform: none }
+}
+
+/* ============================================================
+   LAYAR HOME
+   ============================================================ */
+.eyebrow {
+  margin: 0 0 18px;
+  font-size: 10px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--abu);
+}
+
+.nama {
+  font-family: var(--display);
+  font-size: clamp(3rem, 12vw, 7.5rem);
+  line-height: .92;
+  margin: 0 0 26px;
+  letter-spacing: -.01em;
+}
+
+.baris { display: block }
+
+/* potongan huruf koran */
+.r {
+  display: inline-block;
+  min-width: .54em;
+  padding: .07em .13em .10em;
+  line-height: .88;
+  margin-right: 1px;
+  text-align: center;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, .22);
+}
+
+.tagline {
+  color: #c9c9d2;
+  max-width: 48ch;
+  line-height: 1.7;
+  margin: 0 0 38px;
+}
+
+/* ============================================================
+   MENU
+   ============================================================ */
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  border-top: 1px solid var(--garis);
+  padding-top: 22px;
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  color: var(--putih);
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 4.2vw, 2.4rem);
+  opacity: .42;
+  cursor: pointer;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.menu button:hover { opacity: .75 }
+.menu button.sel  { opacity: 1; transform: translateX(12px) }
+
+.mark {
+  color: var(--merah);
+  font-size: .62em;
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.menu button.sel .mark { opacity: 1 }
+
+/* ============================================================
+   LAYAR LAIN (judul + tombol kembali)
+   ============================================================ */
+.judul {
+  font-family: var(--display);
+  font-size: clamp(2rem, 6.5vw, 4rem);
+  line-height: 1;
+  margin: 0 0 6px;
+}
+
+.back {
+  background: none;
+  border: 0;
+  padding: 10px 0 24px;
+  color: var(--abu);
+  font-size: 10px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color .2s;
+}
+
+.back:hover { color: var(--merah) }
+
+/* ============================================================
+   KARTU PROYEK
+   ============================================================ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  background: var(--hitam2);
+  border: 1px solid var(--garis);
+  padding: 20px;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 7px 7px 0 var(--merah);
+}
+
+.tag {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 3px 8px;
+  border: 1px solid var(--merah);
+  color: var(--merah);
+  font-size: 9px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.card h3 {
+  font-family: var(--display);
+  font-size: 1rem;
+  line-height: 1.25;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+  overflow-wrap: anywhere;
+}
+
+.card p {
+  margin: 0 0 12px;
+  color: #a6a6b0;
+  font-size: .85rem;
+  line-height: 1.6;
+}
+
+.meta {
+  margin-bottom: 12px;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--abu);
+}
+
+.link {
+  color: var(--merah);
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.link:hover { color: var(--putih) }
+
+/* ============================================================
+   SKILLS
+   ============================================================ */
+.skill-group { margin-bottom: 30px }
+
+.skill-group h3 {
+  font-family: var(--display);
+  font-size: .8rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--merah);
+  margin: 0 0 14px;
+}
+
+.bar-row { margin-bottom: 14px }
+
+.bar-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #c9c9d2;
+}
+
+.bar {
+  height: 9px;
+  background: #16161b;
+  border: 1px solid var(--garis);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0;
+  background: var(--merah);
+  transition: width .9s cubic-bezier(.2, .8, .2, 1);
+}
+
+/* ============================================================
+   ABOUT (kertas) & CONTACT
+   ============================================================ */
+.paper {
+  max-width: 640px;
+  padding: 26px 24px;
+  background: var(--putih);
+  color: #0e0e11;
+  line-height: 1.75;
+  box-shadow: 8px 8px 0 var(--merah);
+  font-size: .95rem;
+}
+
+.paper p { margin: 0 0 16px }
+.paper p:last-child { margin-bottom: 0 }
+
+.monogram {
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  margin-bottom: 20px;
+  background: #0e0e11;
+  color: var(--putih);
+  font-family: var(--display);
+  font-size: 1.8rem;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 10px }
+
+.chip {
+  padding: 13px 20px;
+  border: 1px solid #33333c;
+  color: var(--putih);
+  text-decoration: none;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  transition: background .2s, border-color .2s, transform .2s;
+}
+
+.chip:hover {
+  background: var(--merah);
+  border-color: var(--merah);
+  transform: translateY(-3px);
+}
+
+/* ============================================================
+   SAPUAN LAYAR
+   ============================================================ */
+#wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+
+#wipe i {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: var(--hitam);
+  transform: translateX(-101%);
+}
+
+#wipe i:nth-child(2) { background: var(--merah) }
+
+#wipe.go i { animation: sapu .75s cubic-bezier(.76, 0, .24, 1) both }
+#wipe.go i:nth-child(2) { animation-delay: .05s }
+#wipe.go i:nth-child(3) { animation-delay: .10s }
+
+@keyframes sapu {
+  0%   { transform: translateX(-101%) }
+  45%  { transform: translateX(0) }
+  55%  { transform: translateX(0) }
+  100% { transform: translateX(101%) }
+}
+
+/* ============================================================
+   TOMBOL SUARA
+   ============================================================ */
+#audio-toggle {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 950;
+  width: 40px;
+  height: 40px;
+  background: rgba(11, 11, 15, .85);
+  border: 1px solid #33333c;
+  color: var(--abu);
+  font-size: 15px;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+}
+
+#audio-toggle.nyala {
+  color: var(--merah);
+  border-color: var(--merah);
+}
+
+/* ============================================================
+   AKSESIBILITAS & LAYAR KECIL
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--merah);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  body { padding: 16px 16px 12px }
+
+  main { padding: 26px 0 }
+
+  .hud { font-size: 9px; letter-spacing: .14em; gap: 10px }
+
+  #hud-peran { display: none }
+
+  .menu button.sel { transform: translateX(6px) }
+
+  .paper {
+    padding: 20px 18px;
+    box-shadow: 5px 5px 0 var(--merah);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   LATAR VIDEO — hanya tampil di menu utama
+   Dipicu oleh body[data-screen="home"], yang diisi app.js
+   setiap kali layar berganti.
+   ============================================================ */
+.bg-video {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .7s ease;
+}
+
+body[data-screen="home"] .bg-video { opacity: 1 }
+
+.bg-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: .34;
+  filter: contrast(1.05) saturate(.85);
+}
+
+/* lapisan gelap supaya teks tetap terbaca di atas video apa pun */
+.bg-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 45%, transparent 10%, rgba(11, 11, 15, .92) 78%),
+    linear-gradient(rgba(11, 11, 15, .3), rgba(11, 11, 15, .78));
+}
+
+/* pengguna yang memilih "kurangi gerakan" tidak perlu video berjalan */
+@media (prefers-reduced-motion: reduce) {
+  .bg-video { display: none }
+}
