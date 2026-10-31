@@ -853,8 +853,8 @@ body[data-screen="home"] .bg-video[data-untuk="home"] { opacity: 1 }
 body[data-screen="projects"] .bg-video[data-untuk="projects"] { opacity: 1 }
 body[data-screen="skills"] .bg-video[data-untuk="skills"] { opacity: 1 }
 body[data-screen="certificates"] .bg-image[data-untuk="certificates"] { opacity: 1 }
-body[data-screen="about"] .bg-image[data-untuk ="about"] { opacity :1}
-body[data-screen="contact"] .bg-image[data-untuk="contact"] { opacity :1}
+body[data-screen="about"] .bg-image[data-untuk="about"] { opacity: 1; }
+body[data-screen="contact"] .bg-image[data-untuk="contact"] { opacity: 1; }
 
 .bg-image {
   position: fixed;
